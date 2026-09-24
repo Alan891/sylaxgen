@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>sylaxgen — your code is a galaxy</title>
+    <meta name="description" content="Turn any GitHub repository or local codebase into an explorable 3D galaxy. Watch its history form and see your AI coding agent move through it live." />
+    <meta property="og:title" content="sylaxgen — your code is a galaxy" />
+    <meta property="og:description" content="Every file is a star, every folder a spiral arm. Watch your AI agent fly through your codebase live." />
+    <meta property="og:image" content="https://alan891.github.io/sylaxgen/og.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/src/web/style.css" />
+  </head>
+  <body>
+    <div id="stage"></div>
+    <div id="labels"></div>
+
+    <section id="landing">
+      <div class="landing-card">
+        <div class="brand"><span class="spark">✦</span> sylaxgen</div>
+        <h1>Your code is a galaxy.</h1>
+        <p class="lead">
+          Every file is a star. Every folder is a spiral arm. Watch your repository's history form — and see your
+          AI coding agent fly through it, live.
+        </p>
+        <form id="repo-form" autocomplete="off">
+          <input id="repo-input" type="text" placeholder="owner/repo — e.g. facebook/react" spellcheck="false" aria-label="GitHub repository" />
+          <button type="submit" class="primary">Explore</button>
+        </form>
+        <div class="examples" id="examples">
+          <span>Try:</span>
+          <button type="button" data-repo="facebook/react">react</button>
+          <button type="button" data-repo="vuejs/core">vue</button>
+          <button type="button" data-repo="denoland/deno">deno</button>
+          <button type="button" data-repo="microsoft/vscode">vscode</button>
+          <button type="button" data-repo="torvalds/linux">linux</button>
+        </div>
+        <div class="alt-actions">
+          <label class="ghost">Open local folder<input id="folder-input" type="file" webkitdirectory multiple hidden /></label>
+          <label class="ghost">Load galaxy .json<input id="json-input" type="file" accept=".json,application/json" hidden /></label>
+          <button type="button" class="ghost" id="demo-btn">Fly around the demo</button>
+        </div>
+        <div class="cli">
+          <p>Private code, git-history timelapse and <b>live agent view</b>:</p>
+          <code>npx sylaxgen</code>
+        </div>
+        <details class="token">
+          <summary>GitHub token (optional)</summary>
+          <p>Raises the API limit from 60 to 5,000 requests/hour. Stored only in this browser.</p>
+          <input id="token-input" type="password" placeholder="ghp_…" autocomplete="off" />
+        </details>
+        <p class="error" id="landing-error" role="alert"></p>
+      </div>
+    </section>
+
+    <div id="hud" hidden>
+      <header class="top-left panel">
+        <a id="title" target="_blank" rel="noopener"></a>
+        <div id="stats"></div>
+        <div id="truncated" hidden>Large repository: GitHub returned a partial tree.</div>
+      </header>
+
+      <div class="top-right">
+        <input id="search" type="search" placeholder="Search files…  ( / )" spellcheck="false" aria-label="Search files" />
+        <div class="toolbar">
+          <button id="shot-btn" title="Save PNG">📷</button>
+          <button id="share-btn" title="Copy share link">🔗</button>
+          <button id="reset-btn" title="Reset view">⟲</button>
+          <button id="new-btn" title="Open another galaxy">✕</button>
+        </div>
+        <div id="search-count"></div>
+      </div>
+
+      <aside id="legend" class="panel"></aside>
+
+      <aside id="live" class="panel" hidden>
+        <div class="live-head"><span class="dot"></span> LIVE <span id="live-status">waiting for your agent…</span></div>
+        <div class="live-keys">
+          <span><i style="--c: #40bfff"></i>read</span>
+          <span><i style="--c: #ff801f"></i>write</span>
+          <span><i style="--c: #b373ff"></i>search</span>
+          <span><i style="--c: #59ff73"></i>new</span>
+        </div>
+        <ol id="feed"></ol>
+      </aside>
+
+      <div id="timeline" class="panel" hidden>
+        <button id="play-btn" aria-label="Play timelapse">▶</button>
+        <input id="scrub" type="range" min="0" max="1000" value="1000" aria-label="Timeline" />
+        <span id="date"></span>
+      </div>
+
+      <div id="info" class="panel" hidden></div>
+    </div>
+
+    <div id="tooltip" hidden></div>
+    <div id="toast" role="status"></div>
+    <div id="loading" hidden><div class="spinner"></div><span id="loading-text">Mapping the stars…</span></div>
+
+    <script type="module" src="/src/web/main.js"></script>
+  </body>
+</html>
