@@ -1,0 +1,66 @@
+[
+  {
+    "id": "react",
+    "repo": "facebook/react",
+    "blurb": "The library for web and native user interfaces",
+    "files": 7251,
+    "commits": 21708,
+    "since": 2013
+  },
+  {
+    "id": "cpython",
+    "repo": "python/cpython",
+    "blurb": "Three decades of Python, since 1990",
+    "files": 6344,
+    "commits": 133322,
+    "since": 1990
+  },
+  {
+    "id": "git",
+    "repo": "git/git",
+    "blurb": "The version control system that tracks all the others",
+    "files": 4852,
+    "commits": 82307,
+    "since": 2005
+  },
+  {
+    "id": "vscode",
+    "repo": "microsoft/vscode",
+    "blurb": "The editor half of us are reading this in",
+    "files": 18614,
+    "commits": 165981,
+    "since": 2015
+  },
+  {
+    "id": "deno",
+    "repo": "denoland/deno",
+    "blurb": "A modern runtime for JavaScript and TypeScript",
+    "files": 14313,
+    "commits": 17368,
+    "since": 2018
+  },
+  {
+    "id": "svelte",
+    "repo": "sveltejs/svelte",
+    "blurb": "Cybernetically enhanced web apps",
+    "files": 9148,
+    "commits": 11405,
+    "since": 2016
+  },
+  {
+    "id": "redis",
+    "repo": "redis/redis",
+    "blurb": "The in-memory data store behind half the internet",
+    "files": 1869,
+    "commits": 13302,
+    "since": 2009
+  },
+  {
+    "id": "vue",
+    "repo": "vuejs/core",
+    "blurb": "The progressive JavaScript framework, rewritten",
+    "files": 699,
+    "commits": 7198,
+    "since": 2018
+  }
+]

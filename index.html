@@ -30,17 +30,20 @@
         </form>
         <div class="examples" id="examples">
           <span>Try:</span>
-          <button type="button" data-repo="facebook/react">react</button>
-          <button type="button" data-repo="vuejs/core">vue</button>
-          <button type="button" data-repo="denoland/deno">deno</button>
-          <button type="button" data-repo="microsoft/vscode">vscode</button>
           <button type="button" data-repo="torvalds/linux">linux</button>
+          <button type="button" data-repo="rust-lang/rust">rust</button>
+          <button type="button" data-repo="kubernetes/kubernetes">kubernetes</button>
+          <button type="button" data-repo="anthropics/claude-code">claude-code</button>
+          <button type="button" data-repo="openai/codex">codex</button>
         </div>
         <div class="alt-actions">
           <label class="ghost">Open local folder<input id="folder-input" type="file" webkitdirectory multiple hidden /></label>
           <label class="ghost">Load galaxy .json<input id="json-input" type="file" accept=".json,application/json" hidden /></label>
-          <button type="button" class="ghost" id="demo-btn">Fly around the demo</button>
         </div>
+        <section class="landing-gallery" aria-labelledby="gallery-heading">
+          <h2 id="gallery-heading">Famous galaxies <span>— watch decades of history form</span></h2>
+          <div class="gallery-grid" id="landing-grid"></div>
+        </section>
         <div class="cli">
           <p>Private code, git-history timelapse and <b>live agent view</b>:</p>
           <code>npx sylaxgen</code>
@@ -56,7 +59,14 @@
 
     <div id="hud" hidden>
       <header class="top-left panel">
-        <a id="title" target="_blank" rel="noopener"></a>
+        <div class="title-row">
+          <a id="title" target="_blank" rel="noopener"></a>
+          <div id="gal-nav" hidden>
+            <button id="prev-btn" title="Previous galaxy (←)" aria-label="Previous galaxy">‹</button>
+            <span id="gal-pos"></span>
+            <button id="next-btn" title="Next galaxy (→)" aria-label="Next galaxy">›</button>
+          </div>
+        </div>
         <div id="stats"></div>
         <div id="truncated" hidden>Large repository: GitHub returned a partial tree.</div>
       </header>
@@ -64,7 +74,9 @@
       <div class="top-right">
         <input id="search" type="search" placeholder="Search files…  ( / )" spellcheck="false" aria-label="Search files" />
         <div class="toolbar">
-          <button id="shot-btn" title="Save PNG">📷</button>
+          <button id="gallery-btn" title="Gallery (G)" aria-label="Open gallery">🌌</button>
+          <button id="rec-btn" title="Record a video" aria-label="Record a video">⏺</button>
+          <button id="shot-btn" title="Save PNG" aria-label="Save PNG">📷</button>
           <button id="share-btn" title="Copy share link">🔗</button>
           <button id="reset-btn" title="Reset view">⟲</button>
           <button id="new-btn" title="Open another galaxy">✕</button>
@@ -92,6 +104,17 @@
       </div>
 
       <div id="info" class="panel" hidden></div>
+    </div>
+
+    <div id="gallery-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="overlay-heading">
+      <div class="overlay-card panel">
+        <header>
+          <h2 id="overlay-heading">Famous galaxies</h2>
+          <button id="gallery-close" aria-label="Close gallery">✕</button>
+        </header>
+        <p>Pick a galaxy and watch its whole git history play out. Use ← → to hop between them.</p>
+        <div class="gallery-grid" id="overlay-grid"></div>
+      </div>
     </div>
 
     <div id="tooltip" hidden></div>

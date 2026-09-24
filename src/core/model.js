@@ -9,6 +9,9 @@ import { detectLanguage } from './languages.js';
 //   live?: boolean,             // served by `sylaxgen` CLI with /api/events
 //   files: [{ p: "src/a.js", s: 1234, t?: 1700000000 }]  // path, bytes, birth (unix s)
 // }
+//
+// Compact variant (used for the gallery, ~3x smaller): folder names are listed
+// once in `dirs`, and each file is [dirIndex, name, size, birth?].
 
 export const FORMAT_VERSION = 1;
 
@@ -34,6 +37,7 @@ export function isIgnoredPath(path) {
  */
 export function buildGalaxy(data) {
   if (!data || !Array.isArray(data.files)) throw new Error('Invalid galaxy data: missing files');
+  if (Array.isArray(data.dirs)) data = expand(data);
   const seen = new Set();
   const files = [];
   for (const f of data.files) {
@@ -62,6 +66,36 @@ export function buildGalaxy(data) {
     files,
     stats: computeStats(files),
   };
+}
+
+/** Converts galaxy data to the compact form (see top of file). */
+export function compact(data) {
+  const dirIndex = new Map();
+  const dirs = [];
+  const files = data.files.map((f) => {
+    const slash = f.p.lastIndexOf('/');
+    const dir = slash === -1 ? '' : f.p.slice(0, slash);
+    if (!dirIndex.has(dir)) {
+      dirIndex.set(dir, dirs.length);
+      dirs.push(dir);
+    }
+    const row = [dirIndex.get(dir), f.p.slice(slash + 1), f.s];
+    if (f.t) row.push(f.t);
+    return row;
+  });
+  return { ...data, dirs, files };
+}
+
+/** Inverse of compact(). */
+export function expand(data) {
+  const { dirs } = data;
+  const files = data.files.map(([d, name, s, t]) => {
+    const f = { p: dirs[d] ? `${dirs[d]}/${name}` : name, s };
+    if (t) f.t = t;
+    return f;
+  });
+  const { dirs: _, ...rest } = data;
+  return { ...rest, files };
 }
 
 export function computeStats(files) {

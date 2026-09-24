@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { detectLanguage, languageColor } from '../../src/core/languages.js';
 import { computeLayout, GALAXY_RADIUS } from '../../src/core/layout.js';
-import { buildGalaxy, formatBytes, isIgnoredPath } from '../../src/core/model.js';
+import { buildGalaxy, compact, expand, formatBytes, isIgnoredPath } from '../../src/core/model.js';
 import { parseBirthLog } from '../../src/core/scan.js';
 import { parseRepoInput } from '../../src/web/sources.js';
 
@@ -99,4 +99,13 @@ test('parseRepoInput accepts common GitHub forms', () => {
   assert.deepEqual(parseRepoInput('git@github.com:a/b.git'), { owner: 'a', repo: 'b', ref: null });
   assert.equal(parseRepoInput('not a repo'), null);
   assert.equal(parseRepoInput(''), null);
+});
+
+test('compact/expand round-trips and buildGalaxy reads both forms', () => {
+  const data = { name: 'x', source: { type: 'github' }, files: [{ p: 'a.md', s: 1 }, { p: 'src/b.js', s: 2, t: 9 }, { p: 'src/c.js', s: 3 }] };
+  const small = compact(data);
+  assert.deepEqual(small.dirs, ['', 'src']);
+  assert.deepEqual(small.files, [[0, 'a.md', 1], [1, 'b.js', 2, 9], [1, 'c.js', 3]]);
+  assert.deepEqual(expand(small), data);
+  assert.deepEqual(buildGalaxy(small).files.map((f) => f.path), ['a.md', 'src/b.js', 'src/c.js']);
 });

@@ -6,6 +6,8 @@ export default defineConfig({
   use: {
     baseURL: 'http://localhost:4173/',
     viewport: { width: 1280, height: 800 },
+    // Full Chromium (not the headless shell) so canvas.captureStream() yields frames.
+    channel: 'chromium',
     launchOptions: { args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] },
   },
   webServer: {

@@ -28,12 +28,12 @@ const STAR_VERTEX = /* glsl */ `
   varying float vAlpha;
   void main() {
     float born = step(aBirth, uReveal);
-    float fresh = born * (1.0 - smoothstep(0.0, 0.025, uReveal - aBirth)) * step(uReveal, 0.9999);
+    float fresh = born * (1.0 - smoothstep(0.0, 0.015, uReveal - aBirth)) * step(uReveal, 0.9999);
     float glow = max(max(aGlow.r, aGlow.g), aGlow.b);
     vec4 mv = modelViewMatrix * vec4(position, 1.0);
     float twinkle = 0.82 + 0.18 * sin(uTime * 1.7 + position.x * 13.1 + position.z * 7.3);
-    gl_PointSize = aSize * (1.0 + fresh * 3.0 + glow * 2.2) * uPixelRatio * (260.0 / -mv.z);
-    vColor = mix(aColor, vec3(1.0), fresh * 0.6) + aGlow;
+    gl_PointSize = aSize * (1.0 + fresh * 1.3 + glow * 2.2) * uPixelRatio * (260.0 / -mv.z);
+    vColor = mix(aColor, vec3(1.0), fresh * 0.35) + aGlow;
     vAlpha = born * mix(1.0, 0.06, aDim) * mix(twinkle, 1.0, min(glow, 1.0));
     gl_Position = projectionMatrix * mv;
   }
@@ -303,7 +303,9 @@ export class Galaxy {
   }
 
   resetView() {
-    this.flyTo(new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 95, 175));
+    // Portrait screens need to back off so the whole disc fits horizontally.
+    const k = this.camera.aspect < 1 ? Math.min(2.2, 0.85 / this.camera.aspect) : 1;
+    this.flyTo(new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 95 * k, 175 * k));
   }
 
   /** Returns a PNG data URL of the current view. */

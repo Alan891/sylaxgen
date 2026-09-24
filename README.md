@@ -26,6 +26,19 @@ shape you can recognise: big folders become long, bright arms, the root files fo
 has its own color. It's a fun way to explore a new codebase, a good screenshot for your README, and a window into
 what your AI agent is actually doing.
 
+## 🌌 Famous galaxies
+
+The gallery comes with eight famous codebases and their full git history:
+
+- **python/cpython:** since 1990
+- **git/git:** since 2005
+- **facebook/react**, **microsoft/vscode**, **denoland/deno**, **sveltejs/svelte**, **redis/redis** and **vuejs/core**
+
+Pick one and watch decades of commits turn into a galaxy. Hop between galaxies with ← →, and hit ⏺ to record the
+whole timelapse as a video you can post.
+
+<img src="docs/media/hero.png" alt="facebook/react as a galaxy, with language legend, search and timeline" width="720" />
+
 ## ⚡ Live agent view
 
 Run `sylaxgen` in your project while Claude Code, Codex, Cursor or any other agent works. Every file the agent
@@ -60,8 +73,8 @@ successfully and never slows the agent down, even when the viewer isn't running.
 
 ## Quick start
 
-**In the browser:** open [alan891.github.io/sylaxgen](https://alan891.github.io/sylaxgen/) and paste any public
-repository (`owner/repo` or a GitHub URL). You can also open a local folder. It is read entirely in your
+**In the browser:** open [alan891.github.io/sylaxgen](https://alan891.github.io/sylaxgen/) and pick a galaxy from
+the gallery, or paste any public repository (`owner/repo` or a GitHub URL). You can also open a local folder. It is read entirely in your
 browser and never uploaded.
 
 **From the terminal** (private code, git-history timelapse, live agent view):
@@ -89,8 +102,10 @@ Options: `-p, --port` (default `4777`), `--no-open`, `--no-history`, `--no-watch
 | `/` | Search files (everything else dims) |
 | Legend | Click a language to isolate it |
 | `Space` | Play the history timelapse |
+| `←` `→` / `G` | Previous / next gallery galaxy / open the gallery |
+| ⏺ | Record the timelapse (or a 12 s orbit) as a video |
 | 📷 | Save a PNG for your README or socials |
-| 🔗 | Copy a shareable link (`?repo=owner/repo`) |
+| 🔗 | Copy a shareable link (`?repo=owner/repo` or `?galaxy=cpython`) |
 
 ## How the galaxy is drawn
 
@@ -116,6 +131,7 @@ npm run dev        # web app with hot reload
 npm run build      # build the viewer into dist/ (also used by the CLI)
 node bin/sylaxgen.js .
 npm test           # unit + CLI integration tests
+node scripts/make-gallery.js <clones>  # rebuild public/gallery from local clones
 npm run test:e2e   # browser tests (Playwright)
 ```
 
@@ -124,9 +140,10 @@ the viewer (three.js). `bin/sylaxgen.js` is the zero-dependency CLI.
 
 ## Roadmap
 
-- [ ] Galaxy gallery of famous repositories
+- [x] Galaxy gallery of famous repositories
+- [x] Video export straight from the viewer
 - [ ] Commit-by-commit timelapse (changes, not just births) and contributor comets
-- [ ] Video export (MP4/GIF) straight from the viewer
+- [ ] Side-by-side comparison of two galaxies
 - [ ] GitHub Action that keeps a galaxy image in your README up to date
 - [ ] Richer agent integrations (Codex, Cursor, Aider event streams)
 
