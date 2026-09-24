@@ -1,0 +1,52 @@
+{
+  "name": "sylaxgen",
+  "version": "0.1.0",
+  "description": "Turn any codebase into an explorable 3D galaxy. Every file is a star, every folder a spiral arm, every commit a birth.",
+  "type": "module",
+  "bin": {
+    "sylaxgen": "bin/sylaxgen.js"
+  },
+  "files": [
+    "bin",
+    "src/core",
+    "dist"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "demo:data": "node scripts/make-demo.js",
+    "test": "node --test test/unit/*.test.js",
+    "test:e2e": "playwright test",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "visualization",
+    "git",
+    "codebase",
+    "galaxy",
+    "three.js",
+    "webgl",
+    "repository",
+    "developer-tools",
+    "cli"
+  ],
+  "author": "Alan891",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Alan891/sylaxgen.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Alan891/sylaxgen/issues"
+  },
+  "homepage": "https://alan891.github.io/sylaxgen/",
+  "engines": {
+    "node": ">=18"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.56.1",
+    "three": "^0.186.0",
+    "vite": "^8.3.0"
+  }
+}
