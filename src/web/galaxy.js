@@ -55,11 +55,12 @@ const STAR_FRAGMENT = /* glsl */ `
 const DUST_VERTEX = /* glsl */ `
   attribute float aTint;
   uniform float uPixelRatio;
+  uniform float uReveal;
   varying vec3 vColor;
   void main() {
     vec4 mv = modelViewMatrix * vec4(position, 1.0);
     gl_PointSize = (aTint > 0.5 ? 7.0 : 9.0) * uPixelRatio * (160.0 / -mv.z);
-    vColor = aTint > 0.5 ? vec3(1.0, 0.78, 0.55) * 0.07 : vec3(0.35, 0.45, 1.0) * 0.045;
+    vColor = (aTint > 0.5 ? vec3(1.0, 0.78, 0.55) * 0.07 : vec3(0.35, 0.45, 1.0) * 0.045) * (0.2 + 0.8 * uReveal);
     gl_Position = projectionMatrix * mv;
   }
 `;
@@ -204,7 +205,7 @@ export class Galaxy {
     dustGeo.setAttribute('position', new THREE.BufferAttribute(layout.dust.positions, 3));
     dustGeo.setAttribute('aTint', new THREE.BufferAttribute(layout.dust.tints, 1));
     this.dustMaterial ??= new THREE.ShaderMaterial({
-      uniforms: { uPixelRatio: this.uniforms.uPixelRatio },
+      uniforms: { uPixelRatio: this.uniforms.uPixelRatio, uReveal: this.uniforms.uReveal },
       vertexShader: DUST_VERTEX,
       fragmentShader: DUST_FRAGMENT,
       transparent: true,

@@ -16,7 +16,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "demo:data": "node scripts/make-demo.js",
-    "test": "node --test test/unit/",
+    "test": "node --test test/unit/*.test.js",
     "test:e2e": "playwright test",
     "prepublishOnly": "npm run build"
   },
